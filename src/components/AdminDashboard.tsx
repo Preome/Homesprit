@@ -282,7 +282,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
 
               <div className="text-xs text-neutral-500 font-mono tabular-nums">
-                {filteredInquiries.length} total customer requests (Properties & Atelier Home Spirit)
+                {filteredInquiries.length} viewing requests
               </div>
             </div>
 
@@ -292,75 +292,55 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <thead className="bg-neutral-50 border-b border-neutral-200 text-neutral-500 uppercase tracking-wider text-[11px] font-semibold">
                   <tr>
                     <th className="py-3 px-4">Client Contact</th>
-                    <th className="py-3 px-4">Subject / Model</th>
+                    <th className="py-3 px-4">Target Property</th>
                     <th className="py-3 px-4">Requested Window</th>
-                    <th className="py-3 px-4">Message / Configuration Details</th>
+                    <th className="py-3 px-4">Message / Request</th>
                     <th className="py-3 px-4">Inquiry Status</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-neutral-100">
-                  {filteredInquiries.map((inq) => {
-                    const isAtelier = inq.propertyId.includes('homespirit') || inq.propertyTitle.includes('Atelier') || inq.propertyTitle.includes('Swatches');
-                    const isSwatch = inq.propertyId.includes('swatches') || inq.propertyTitle.includes('Swatches');
+                  {filteredInquiries.map((inq) => (
+                    <tr key={inq.id} className="hover:bg-neutral-50/70 transition-colors">
+                      <td className="py-3.5 px-4">
+                        <div className="font-bold text-neutral-900">{inq.customerName}</div>
+                        <div className="text-[11px] text-neutral-500">{inq.customerEmail}</div>
+                        <div className="text-[11px] font-mono text-neutral-400">{inq.customerPhone}</div>
+                      </td>
 
-                    return (
-                      <tr key={inq.id} className="hover:bg-neutral-50/70 transition-colors">
-                        <td className="py-3.5 px-4">
-                          <div className="font-bold text-neutral-900">{inq.customerName}</div>
-                          <div className="text-[11px] text-neutral-500">{inq.customerEmail}</div>
-                          <div className="text-[11px] font-mono text-neutral-400">{inq.customerPhone}</div>
-                        </td>
+                      <td className="py-3.5 px-4 font-medium text-neutral-900 max-w-xs">
+                        <div className="truncate">{inq.propertyTitle}</div>
+                        <div className="text-[11px] text-neutral-400 font-mono">ID: {inq.propertyId}</div>
+                      </td>
 
-                        <td className="py-3.5 px-4 font-medium text-neutral-900 max-w-xs">
-                          <div className="truncate">{inq.propertyTitle}</div>
-                          <div className="flex items-center gap-1.5 mt-1">
-                            {isSwatch ? (
-                              <span className="text-[10px] bg-purple-50 text-purple-700 border border-purple-200 px-1.5 py-0.2 rounded font-mono font-medium">
-                                Fabric Swatch Kit
-                              </span>
-                            ) : isAtelier ? (
-                              <span className="text-[10px] bg-amber-50 text-amber-800 border border-amber-200 px-1.5 py-0.2 rounded font-mono font-medium">
-                                Atelier Custom Sofa
-                              </span>
-                            ) : (
-                              <span className="text-[10px] bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.2 rounded font-mono font-medium">
-                                Real Estate Viewing
-                              </span>
-                            )}
-                            <span className="text-[10px] text-neutral-400 font-mono">ID: {inq.propertyId}</span>
-                          </div>
-                        </td>
+                      <td className="py-3.5 px-4 text-neutral-700 font-mono tabular-nums">
+                        <div>{inq.preferredDate}</div>
+                        <div className="text-[11px] text-neutral-500">{inq.preferredTime}</div>
+                      </td>
 
-                        <td className="py-3.5 px-4 text-neutral-700 font-mono tabular-nums">
-                          <div>{inq.preferredDate}</div>
-                          <div className="text-[11px] text-neutral-500">{inq.preferredTime}</div>
-                        </td>
+                      <td className="py-3.5 px-4 text-neutral-600 max-w-sm">
+                        <div className="line-clamp-2 italic">"{inq.message}"</div>
+                      </td>
 
-                        <td className="py-3.5 px-4 text-neutral-600 max-w-sm">
-                          <div className="line-clamp-2 italic">"{inq.message}"</div>
-                        </td>
-
-                        <td className="py-3.5 px-4">
-                          <select
-                            value={inq.status}
-                            onChange={(e) => onUpdateInquiryStatus(inq.id, e.target.value as InquiryStatus)}
-                            className={`text-xs p-1.5 rounded font-medium border cursor-pointer ${
-                              inq.status === 'New'
-                                ? 'bg-rose-50 text-rose-800 border-rose-200'
-                                : inq.status === 'Viewing Scheduled'
-                                ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                                : 'bg-neutral-100 text-neutral-800 border-neutral-300'
-                            }`}
-                          >
-                            <option value="New">New Request</option>
-                            <option value="Contacted">Contacted</option>
-                            <option value="Viewing Scheduled">Viewing / Order Scheduled</option>
-                            <option value="Archived">Archived</option>
-                          </select>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                      <td className="py-3.5 px-4">
+                        <select
+                          value={inq.status}
+                          onChange={(e) => onUpdateInquiryStatus(inq.id, e.target.value as InquiryStatus)}
+                          className={`text-xs p-1.5 rounded font-medium border cursor-pointer ${
+                            inq.status === 'New'
+                              ? 'bg-rose-50 text-rose-800 border-rose-200'
+                              : inq.status === 'Viewing Scheduled'
+                              ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                              : 'bg-neutral-100 text-neutral-800 border-neutral-300'
+                          }`}
+                        >
+                          <option value="New">New Request</option>
+                          <option value="Contacted">Contacted</option>
+                          <option value="Viewing Scheduled">Viewing Scheduled</option>
+                          <option value="Archived">Archived</option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

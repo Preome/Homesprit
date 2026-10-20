@@ -137,25 +137,3 @@ For evaluation testing of user journeys across the platform:
 | `GET` | `/api/admin/metrics` | Portfolio KPI metrics (Total Properties, Active, Inquiries, Volume). |
 | `GET` | `/api/db/status` | Real-time MongoDB Atlas latency and collections count. |
 | `POST` | `/api/db/seed` | Programmatically re-seed properties and inquiries into Atlas. |
-
----
-
-## 7. How to Deploy to Vercel
-
-The application is pre-configured with `vercel.json` and a serverless API entry point (`api/index.ts`).
-
-### Option A: Deploy via GitHub (Recommended)
-1. Push this project to your GitHub repository.
-2. Go to [vercel.com](https://vercel.com) and click **"Add New Project"**.
-3. Import your GitHub repository.
-4. In the **Environment Variables** section, add:
-   - **Key:** `DATABASE_URL`
-   - **Value:** `mongodb+srv://tasdidanawaz_db_user:zTKxBe4Ti84gxoV0@cluster0.9yxdz1b.mongodb.net/homesprit?retryWrites=true&w=majority`
-5. Click **"Deploy"**. Vercel will build the frontend (`dist`) and deploy the API as serverless functions.
-
-### Option B: Deploy via Vercel CLI
-```bash
-npm i -g vercel
-vercel
-# Follow the interactive prompts and add the DATABASE_URL environment variable when prompted.
-```
