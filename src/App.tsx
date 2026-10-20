@@ -13,6 +13,7 @@ import { LoginModal, AuthUser } from './components/LoginModal';
 import { Property, Inquiry, AdminMetrics, InquiryStatus } from './types/property';
 import { DbStatus } from './types';
 import { INITIAL_PROPERTIES, INITIAL_INQUIRIES } from './data/initialProperties';
+import { resolveImageUrls } from './utils/images';
 
 export default function App() {
   const [activeView, setActiveView] = useState<'home' | 'properties' | 'about' | 'contact' | 'admin'>('home');
@@ -50,7 +51,15 @@ export default function App() {
         fetch('/api/db/status'),
       ]);
 
-      if (propsRes.ok) setProperties(await propsRes.json());
+      if (propsRes.ok) {
+        const remoteProperties = (await propsRes.json()) as Property[];
+        setProperties(
+          remoteProperties.map((property) => ({
+            ...property,
+            images: resolveImageUrls(property.images),
+          }))
+        );
+      }
       if (inqRes.ok) setInquiries(await inqRes.json());
       if (dbRes.ok) setDbStatus(await dbRes.json());
     } catch {
@@ -124,7 +133,7 @@ export default function App() {
           areaSqFt: propertyData.areaSqFt || 2400,
           description: propertyData.description || 'Pristine architectural property.',
           amenities: propertyData.amenities || [],
-          images: propertyData.images || ['/src/assets/images/villa_glass_architecture_1792504953976.jpg'],
+          images: propertyData.images || ['/images/villa_glass_architecture_1792504953976.jpg'],
           featured: Boolean(propertyData.featured),
           status: propertyData.status || 'Available',
           agent: properties[0]?.agent,

@@ -55,9 +55,9 @@ export const INITIAL_PROPERTIES: Property[] = [
       'Gated Private Security Perimeter'
     ],
     images: [
-      '/src/assets/images/villa_glass_architecture_1792504953976.jpg',
-      '/src/assets/images/hero_homesprit_living_1792504084898.jpg',
-      '/src/assets/images/service_deep_clean_1792504086137.jpg',
+      '/images/villa_glass_architecture_1792504953976.jpg',
+      '/images/hero_homesprit_living_1792504084898.jpg',
+      '/images/service_deep_clean_1792504086137.jpg',
     ],
     featured: true,
     status: 'Available',
@@ -91,9 +91,9 @@ export const INITIAL_PROPERTIES: Property[] = [
       'Residents-Only Wellness Spa & Lap Pool'
     ],
     images: [
-      '/src/assets/images/penthouse_city_view_1792504953868.jpg',
-      '/src/assets/images/service_interior_craft_1792504085124.jpg',
-      '/src/assets/images/service_smart_maintenance_1792504086207.jpg',
+      '/images/penthouse_city_view_1792504953868.jpg',
+      '/images/service_interior_craft_1792504085124.jpg',
+      '/images/service_smart_maintenance_1792504086207.jpg',
     ],
     featured: true,
     status: 'Available',
@@ -127,9 +127,9 @@ export const INITIAL_PROPERTIES: Property[] = [
       'Outdoor Dining Pavilion with Fire Pit'
     ],
     images: [
-      '/src/assets/images/modern_suburban_house_1792504955204.jpg',
-      '/src/assets/images/hero_homesprit_living_1792504084898.jpg',
-      '/src/assets/images/service_deep_clean_1792504086137.jpg',
+      '/images/modern_suburban_house_1792504955204.jpg',
+      '/images/hero_homesprit_living_1792504084898.jpg',
+      '/images/service_deep_clean_1792504086137.jpg',
     ],
     featured: true,
     status: 'Available',
@@ -164,9 +164,9 @@ export const INITIAL_PROPERTIES: Property[] = [
       'On-site Artisanal Café & Catering Prep Facility'
     ],
     images: [
-      '/src/assets/images/commercial_modern_building_1792504955712.jpg',
-      '/src/assets/images/service_smart_maintenance_1792504086207.jpg',
-      '/src/assets/images/villa_glass_architecture_1792504953976.jpg',
+      '/images/commercial_modern_building_1792504955712.jpg',
+      '/images/service_smart_maintenance_1792504086207.jpg',
+      '/images/villa_glass_architecture_1792504953976.jpg',
     ],
     featured: false,
     status: 'Available',
@@ -201,9 +201,9 @@ export const INITIAL_PROPERTIES: Property[] = [
       'In-Unit Miele Washer & Dryer'
     ],
     images: [
-      '/src/assets/images/service_interior_craft_1792504085124.jpg',
-      '/src/assets/images/penthouse_city_view_1792504953868.jpg',
-      '/src/assets/images/hero_homesprit_living_1792504084898.jpg',
+      '/images/service_interior_craft_1792504085124.jpg',
+      '/images/penthouse_city_view_1792504953868.jpg',
+      '/images/hero_homesprit_living_1792504084898.jpg',
     ],
     featured: false,
     status: 'Available',
@@ -237,9 +237,9 @@ export const INITIAL_PROPERTIES: Property[] = [
       'Zoned for R&D, Tech and Creative Production'
     ],
     images: [
-      '/src/assets/images/commercial_modern_building_1792504955712.jpg',
-      '/src/assets/images/villa_glass_architecture_1792504953976.jpg',
-      '/src/assets/images/service_smart_maintenance_1792504086207.jpg',
+      '/images/commercial_modern_building_1792504955712.jpg',
+      '/images/villa_glass_architecture_1792504953976.jpg',
+      '/images/service_smart_maintenance_1792504086207.jpg',
     ],
     featured: false,
     status: 'Available',

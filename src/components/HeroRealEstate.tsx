@@ -96,7 +96,7 @@ export const HeroRealEstate: React.FC<HeroRealEstateProps> = ({
           <div className="lg:col-span-6">
             <div className="relative rounded-2xl overflow-hidden border border-neutral-200/90 bg-neutral-100 shadow-xl aspect-16/11 group">
               <img
-                src="/src/assets/images/villa_glass_architecture_1792504953976.jpg"
+                src="/images/villa_glass_architecture_1792504953976.jpg"
                 alt="Architectural modern glass villa with infinity pool"
                 className="w-full h-full object-cover group-hover:scale-101 transition-transform duration-700"
                 referrerPolicy="no-referrer"

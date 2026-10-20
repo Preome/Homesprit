@@ -37,18 +37,18 @@ export const AddEditPropertyModal: React.FC<AddEditPropertyModalProps> = ({
     propertyToEdit?.amenities.join(', ') || 'Smart Home Automation, Floor-to-Ceiling Windows, Heated Floors'
   );
   const [imageUrl, setImageUrl] = useState(
-    propertyToEdit?.images[0] || '/src/assets/images/villa_glass_architecture_1792504953976.jpg'
+    propertyToEdit?.images[0] || '/images/villa_glass_architecture_1792504953976.jpg'
   );
   const [featured, setFeatured] = useState(propertyToEdit?.featured || false);
   const [status, setStatus] = useState<PropertyStatus>(propertyToEdit?.status || 'Available');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const presetImages = [
-    { label: 'Glass Villa Exterior', url: '/src/assets/images/villa_glass_architecture_1792504953976.jpg' },
-    { label: 'Skyline Penthouse', url: '/src/assets/images/penthouse_city_view_1792504953868.jpg' },
-    { label: 'Cedar Suburban Residence', url: '/src/assets/images/modern_suburban_house_1792504955204.jpg' },
-    { label: 'Modern Commercial Hub', url: '/src/assets/images/commercial_modern_building_1792504955712.jpg' },
-    { label: 'Architectural Living Room', url: '/src/assets/images/hero_homesprit_living_1792504084898.jpg' },
+    { label: 'Glass Villa Exterior', url: '/images/villa_glass_architecture_1792504953976.jpg' },
+    { label: 'Skyline Penthouse', url: '/images/penthouse_city_view_1792504953868.jpg' },
+    { label: 'Cedar Suburban Residence', url: '/images/modern_suburban_house_1792504955204.jpg' },
+    { label: 'Modern Commercial Hub', url: '/images/commercial_modern_building_1792504955712.jpg' },
+    { label: 'Architectural Living Room', url: '/images/hero_homesprit_living_1792504084898.jpg' },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {

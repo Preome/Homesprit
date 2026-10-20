@@ -250,7 +250,7 @@ export const PropertyListings: React.FC<PropertyListingsProps> = ({
                   onClick={() => onSelectProperty(prop)}
                 >
                   <img
-                    src={prop.images[0] || '/src/assets/images/villa_glass_architecture_1792504953976.jpg'}
+                    src={prop.images[0] || '/images/villa_glass_architecture_1792504953976.jpg'}
                     alt={prop.title}
                     className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
                     referrerPolicy="no-referrer"

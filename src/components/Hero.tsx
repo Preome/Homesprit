@@ -68,7 +68,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigateSection }) 
           <div className="lg:col-span-6">
             <div className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm aspect-16/10">
               <img
-                src="/src/assets/images/hero_homesprit_living_1792504084898.jpg"
+                src="/images/hero_homesprit_living_1792504084898.jpg"
                 alt="Minimalist sunlit architectural living room with natural oak finishes"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"

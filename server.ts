@@ -6,6 +6,11 @@ import { MongoClient } from 'mongodb';
 import { INITIAL_PROPERTIES, INITIAL_INQUIRIES, INITIAL_AGENTS } from './src/data/initialProperties.ts';
 import { Property, Inquiry, AgentContact, AdminMetrics } from './src/types/property.ts';
 import { DbStatus } from './src/types/index.ts';
+import { resolveImageUrls } from './src/utils/images.ts';
+
+function withPublicImages(property: Property): Property {
+  return { ...property, images: resolveImageUrls(property.images) };
+}
 
 dotenv.config();
 
@@ -64,7 +69,7 @@ async function tryConnectMongo(uri: string): Promise<{ success: boolean; message
       await db.collection('inquiries').insertMany(inquiriesCache as any);
       await db.collection('agents').insertMany(agentsCache as any);
     } else {
-      propertiesCache = (await db.collection('properties').find({}).toArray()) as any;
+      propertiesCache = ((await db.collection('properties').find({}).toArray()) as Property[]).map(withPublicImages);
       inquiriesCache = (await db.collection('inquiries').find({}).toArray()) as any;
       agentsCache = (await db.collection('agents').find({}).toArray()) as any;
     }
@@ -260,7 +265,7 @@ app.post('/api/properties', async (req: Request, res: Response) => {
       areaSqFt: Number(data.areaSqFt) || 2500,
       description: data.description || 'Pristine architectural property with serene natural light and bespoke finishes.',
       amenities: data.amenities || ['Smart Home Automation', 'Floor-to-Ceiling Windows', 'Chef Kitchen'],
-      images: data.images && data.images.length > 0 ? data.images : ['/src/assets/images/villa_glass_architecture_1792504953976.jpg'],
+      images: data.images && data.images.length > 0 ? data.images : ['/images/villa_glass_architecture_1792504953976.jpg'],
       featured: Boolean(data.featured),
       status: data.status || 'Available',
       agent: data.agent || agentsCache[0],

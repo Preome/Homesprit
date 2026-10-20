@@ -20,7 +20,7 @@ export const INITIAL_SERVICES: Service[] = [
     priceUnit: 'base visit',
     rating: 4.96,
     reviewCount: 342,
-    imageUrl: '/src/assets/images/service_deep_clean_1792504086137.jpg',
+    imageUrl: '/images/service_deep_clean_1792504086137.jpg',
     popular: true
   },
   {
@@ -42,7 +42,7 @@ export const INITIAL_SERVICES: Service[] = [
     priceUnit: 'per room',
     rating: 4.98,
     reviewCount: 184,
-    imageUrl: '/src/assets/images/service_interior_craft_1792504085124.jpg',
+    imageUrl: '/images/service_interior_craft_1792504085124.jpg',
     popular: true
   },
   {
@@ -64,7 +64,7 @@ export const INITIAL_SERVICES: Service[] = [
     priceUnit: 'flat diagnostic',
     rating: 4.92,
     reviewCount: 129,
-    imageUrl: '/src/assets/images/service_smart_maintenance_1792504086207.jpg',
+    imageUrl: '/images/service_smart_maintenance_1792504086207.jpg',
     popular: false
   },
   {
@@ -86,7 +86,7 @@ export const INITIAL_SERVICES: Service[] = [
     priceUnit: 'base 2 hours',
     rating: 4.94,
     reviewCount: 215,
-    imageUrl: '/src/assets/images/hero_homesprit_living_1792504084898.jpg',
+    imageUrl: '/images/hero_homesprit_living_1792504084898.jpg',
     popular: false
   }
 ];

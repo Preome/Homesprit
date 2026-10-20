@@ -39,7 +39,7 @@ export const PropertyDetailsModal: React.FC<PropertyDetailsModalProps> = ({
 
   const images = property.images && property.images.length > 0
     ? property.images
-    : ['/src/assets/images/villa_glass_architecture_1792504953976.jpg'];
+    : ['/images/villa_glass_architecture_1792504953976.jpg'];
 
   const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
