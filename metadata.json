@@ -1,0 +1,6 @@
+{
+  "name": "Homesprit - Premium Home Services & Concierge",
+  "description": "Functional demo application for Homesprit featuring on-demand home cleaning, interior styling, smart maintenance, online bookings, Prisma schema, and MongoDB Atlas integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

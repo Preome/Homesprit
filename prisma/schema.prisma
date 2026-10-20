@@ -1,0 +1,116 @@
+// Prisma Schema for Homesprit Real Estate Platform
+// Database Provider: MongoDB Atlas
+// Target Cluster: cluster0.9yxdz1b.mongodb.net
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  AGENT
+  ADMIN
+}
+
+enum PropertyType {
+  House
+  Apartment
+  Commercial
+}
+
+enum ListingType {
+  Sale
+  Rent
+}
+
+enum PropertyStatus {
+  Available
+  Under_Contract
+  Sold
+  Leased
+}
+
+enum InquiryStatus {
+  New
+  Contacted
+  Viewing_Scheduled
+  Archived
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  email         String    @unique
+  name          String
+  role          Role      @default(CUSTOMER)
+  phone         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Agent {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  title         String
+  phone         String
+  email         String     @unique
+  avatar        String
+  properties    Property[]
+  createdAt     DateTime   @default(now())
+
+  @@map("agents")
+}
+
+model Property {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  slug          String         @unique
+  type          PropertyType
+  listingType   ListingType
+  price         Float
+  priceUnit     String?
+  address       String
+  neighborhood  String
+  city          String
+  zip           String
+  bedrooms      Int
+  bathrooms     Float
+  areaSqFt      Int
+  description   String
+  amenities     String[]
+  images        String[]
+  featured      Boolean        @default(false)
+  status        PropertyStatus @default(Available)
+  agentId       String?        @db.ObjectId
+  agent         Agent?         @relation(fields: [agentId], references: [id])
+  inquiries     Inquiry[]
+  yearBuilt     Int
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@map("properties")
+}
+
+model Inquiry {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  propertyId     String        @db.ObjectId
+  property       Property      @relation(fields: [propertyId], references: [id])
+  propertyTitle  String
+  customerName   String
+  customerEmail  String
+  customerPhone  String
+  preferredDate  String
+  preferredTime  String
+  message        String
+  status         InquiryStatus @default(New)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("inquiries")
+}
