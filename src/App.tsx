@@ -93,7 +93,9 @@ export default function App() {
         });
         if (res.ok) {
           const updated: Property = await res.json();
-          setProperties((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
+          setProperties((prev) =>
+            prev.map((p) => (p.id === updated.id ? { ...updated, images: resolveImageUrls(updated.images) } : p))
+          );
         }
       } else {
         // Create
@@ -104,7 +106,7 @@ export default function App() {
         });
         if (res.ok) {
           const created: Property = await res.json();
-          setProperties((prev) => [created, ...prev]);
+          setProperties((prev) => [{ ...created, images: resolveImageUrls(created.images) }, ...prev]);
         }
       }
     } catch (err) {
@@ -112,7 +114,11 @@ export default function App() {
       // Client optimistic fallback
       if (propertyToEdit) {
         setProperties((prev) =>
-          prev.map((p) => (p.id === propertyToEdit.id ? ({ ...p, ...propertyData } as Property) : p))
+          prev.map((p) =>
+            p.id === propertyToEdit.id
+              ? ({ ...p, ...propertyData, images: resolveImageUrls(propertyData.images ?? p.images) } as Property)
+              : p
+          )
         );
       } else {
         const dummy: Property = {
@@ -133,7 +139,7 @@ export default function App() {
           areaSqFt: propertyData.areaSqFt || 2400,
           description: propertyData.description || 'Pristine architectural property.',
           amenities: propertyData.amenities || [],
-          images: propertyData.images || ['/images/villa_glass_architecture_1792504953976.jpg'],
+          images: resolveImageUrls(propertyData.images),
           featured: Boolean(propertyData.featured),
           status: propertyData.status || 'Available',
           agent: properties[0]?.agent,

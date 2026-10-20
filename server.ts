@@ -69,7 +69,7 @@ async function tryConnectMongo(uri: string): Promise<{ success: boolean; message
       await db.collection('inquiries').insertMany(inquiriesCache as any);
       await db.collection('agents').insertMany(agentsCache as any);
     } else {
-      propertiesCache = ((await db.collection('properties').find({}).toArray()) as Property[]).map(withPublicImages);
+      propertiesCache = ((await db.collection('properties').find({}).toArray()) as unknown as Property[]).map(withPublicImages);
       inquiriesCache = (await db.collection('inquiries').find({}).toArray()) as any;
       agentsCache = (await db.collection('agents').find({}).toArray()) as any;
     }
@@ -234,13 +234,13 @@ app.get('/api/properties', (req: Request, res: Response) => {
     list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
-  res.json(list);
+  res.json(list.map(withPublicImages));
 });
 
 app.get('/api/properties/:id', (req: Request, res: Response) => {
   const prop = propertiesCache.find(p => p.id === req.params.id || p.slug === req.params.id);
   if (!prop) return res.status(404).json({ error: 'Property not found' });
-  res.json(prop);
+  res.json(withPublicImages(prop));
 });
 
 app.post('/api/properties', async (req: Request, res: Response) => {
@@ -265,7 +265,7 @@ app.post('/api/properties', async (req: Request, res: Response) => {
       areaSqFt: Number(data.areaSqFt) || 2500,
       description: data.description || 'Pristine architectural property with serene natural light and bespoke finishes.',
       amenities: data.amenities || ['Smart Home Automation', 'Floor-to-Ceiling Windows', 'Chef Kitchen'],
-      images: data.images && data.images.length > 0 ? data.images : ['/images/villa_glass_architecture_1792504953976.jpg'],
+      images: resolveImageUrls(data.images && data.images.length > 0 ? data.images : undefined),
       featured: Boolean(data.featured),
       status: data.status || 'Available',
       agent: data.agent || agentsCache[0],
@@ -279,7 +279,7 @@ app.post('/api/properties', async (req: Request, res: Response) => {
       await mongoClient.db('homesprit').collection('properties').insertOne(newProperty as any);
     }
 
-    res.status(201).json(newProperty);
+    res.status(201).json(withPublicImages(newProperty));
   } catch (err: any) {
     res.status(500).json({ error: err.message || 'Failed to create property' });
   }
@@ -296,6 +296,7 @@ app.put('/api/properties/:id', async (req: Request, res: Response) => {
     ...req.body,
     id: propertiesCache[index].id,
   };
+  updated.images = resolveImageUrls(updated.images);
   propertiesCache[index] = updated;
 
   if (isMongoConnected && mongoClient) {
@@ -305,7 +306,7 @@ app.put('/api/properties/:id', async (req: Request, res: Response) => {
     );
   }
 
-  res.json(updated);
+  res.json(withPublicImages(updated));
 });
 
 app.delete('/api/properties/:id', async (req: Request, res: Response) => {
