@@ -5,6 +5,7 @@ import { PropertyListings } from './components/PropertyListings';
 import { PropertyDetailsModal } from './components/PropertyDetailsModal';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AddEditPropertyModal } from './components/AddEditPropertyModal';
+import { AtelierConfigurator } from './components/AtelierConfigurator';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -15,7 +16,7 @@ import { DbStatus } from './types';
 import { INITIAL_PROPERTIES, INITIAL_INQUIRIES } from './data/initialProperties';
 
 export default function App() {
-  const [activeView, setActiveView] = useState<'home' | 'properties' | 'about' | 'contact' | 'admin'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'properties' | 'atelier' | 'about' | 'contact' | 'admin'>('home');
   const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);
   const [inquiries, setInquiries] = useState<Inquiry[]>(INITIAL_INQUIRIES);
   const [dbStatus, setDbStatus] = useState<DbStatus | null>(null);
@@ -197,6 +198,45 @@ export default function App() {
     }
   };
 
+  const handleInquireAtelierPiece = async (configSummary: {
+    model: string;
+    size: string;
+    fabric: string;
+    color: string;
+    comfort: string;
+    slipcover: string;
+    stitching: string;
+    priceUsd: number;
+  }) => {
+    await handleInquirySubmit({
+      propertyId: 'homespirit-piece',
+      customerName: currentUser?.name || 'Private Collector',
+      customerEmail: currentUser?.email || 'collector@example.com',
+      customerPhone: '+1 (555) 019-2834',
+      preferredDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+      preferredTime: '11:00 AM',
+      message: `Bespoke Order: Home Spirit Modèle ${configSummary.model} · ${configSummary.size} · ${configSummary.fabric} (${configSummary.color}) · ${configSummary.comfort} · ${configSummary.slipcover} · ${configSummary.stitching} · Quoted Price: $${configSummary.priceUsd.toLocaleString()} USD`,
+    });
+  };
+
+  const handleOrderSwatches = async (swatchData: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    swatches: string[];
+  }) => {
+    await handleInquirySubmit({
+      propertyId: 'homespirit-swatches',
+      customerName: swatchData.name,
+      customerEmail: swatchData.email,
+      customerPhone: swatchData.phone,
+      preferredDate: new Date().toISOString().split('T')[0],
+      preferredTime: 'Priority Post',
+      message: `Fabric Swatches Kit: ${swatchData.swatches.join(', ')} · Mailing Address: ${swatchData.address}`,
+    });
+  };
+
   const metrics: AdminMetrics = {
     totalProperties: properties.length,
     activeListings: properties.filter((p) => p.status === 'Available').length,
@@ -374,6 +414,165 @@ export default function App() {
               </div>
             </section>
 
+            {/* Atelier Home Spirit France Showcase on Home */}
+            <section className="py-20 bg-stone-100/60 border-b border-neutral-200">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+                  <div>
+                    <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-500 font-semibold mb-2">
+                      <span className="w-2 h-2 rounded-full bg-amber-600 inline-block"></span>
+                      <span>Atelier Home Spirit France · Fabricant depuis 1965</span>
+                    </div>
+                    <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-neutral-950">
+                      Bespoke French sofas & artisanal living interiors
+                    </h2>
+                    <p className="mt-2 text-xs sm:text-sm text-neutral-600 max-w-2xl">
+                      Every trophy residence curated by Homesprit is paired with custom upholstered seating from Home Spirit France. Tailor-made in Neuville-en-Ferrain with pure Normandy washed linen, Italian velvet, and sustainably sourced French beechwood.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setActiveView('atelier');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="px-5 py-2.5 text-xs font-semibold text-white bg-neutral-950 hover:bg-neutral-800 rounded-lg transition-colors cursor-pointer shrink-0 shadow-xs flex items-center gap-2"
+                  >
+                    <span>Launch Atelier Configurator</span>
+                    <span>&rarr;</span>
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {/* Card 1: Biha Linen Icon */}
+                  <div
+                    onClick={() => {
+                      setActiveView('atelier');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="bg-white border border-neutral-200/90 rounded-2xl overflow-hidden shadow-2xs hover:shadow-lg hover:border-neutral-300 transition-all cursor-pointer group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="relative aspect-16/10 bg-neutral-100 overflow-hidden">
+                        <img
+                          src="/src/assets/images/homespirit_french_linen_sofa_1792507562168.jpg"
+                          alt="Biha Washed Linen Sofa"
+                          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute top-3 left-3 bg-neutral-950/80 backdrop-blur-md text-white text-[11px] font-medium px-2.5 py-0.5 rounded-md">
+                          Modèle Biha
+                        </div>
+                        <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md rounded-xl px-3 py-2 flex items-center justify-between text-xs">
+                          <span className="font-semibold text-neutral-900">100% Lin Lavé Français</span>
+                          <span className="font-mono font-bold text-neutral-950">From $2,850</span>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="text-[10px] uppercase font-mono text-neutral-400 font-bold mb-1">
+                          Normandy Flax Weave
+                        </div>
+                        <h3 className="font-bold text-neutral-950 text-base group-hover:text-neutral-700 transition-colors">
+                          Biha Relaxed Washed Linen Sofa
+                        </h3>
+                        <p className="mt-2 text-xs text-neutral-600 leading-relaxed">
+                          Oversized feather cushions, deep relaxed seat, exposed flange seams, and 100% removable slipcovers for machine washing.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="p-6 pt-0 flex items-center justify-between text-xs font-semibold text-neutral-950 border-t border-neutral-100 mt-4">
+                      <span>Customize Dimensions & Fabric</span>
+                      <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                    </div>
+                  </div>
+
+                  {/* Card 2: Saint-Germain Haussmann Velvet */}
+                  <div
+                    onClick={() => {
+                      setActiveView('atelier');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="bg-white border border-neutral-200/90 rounded-2xl overflow-hidden shadow-2xs hover:shadow-lg hover:border-neutral-300 transition-all cursor-pointer group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="relative aspect-16/10 bg-neutral-100 overflow-hidden">
+                        <img
+                          src="/src/assets/images/homespirit_saint_germain_sofa_1792507865787.jpg"
+                          alt="Saint-Germain Velvet Sofa"
+                          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute top-3 left-3 bg-neutral-950/80 backdrop-blur-md text-white text-[11px] font-medium px-2.5 py-0.5 rounded-md">
+                          Modèle Saint-Germain
+                        </div>
+                        <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md rounded-xl px-3 py-2 flex items-center justify-between text-xs">
+                          <span className="font-semibold text-neutral-900">Velours Côtelé Royal</span>
+                          <span className="font-mono font-bold text-neutral-950">From $3,450</span>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="text-[10px] uppercase font-mono text-neutral-400 font-bold mb-1">
+                          Parisian Haussmann Tailoring
+                        </div>
+                        <h3 className="font-bold text-neutral-950 text-base group-hover:text-neutral-700 transition-colors">
+                          Saint-Germain Tuxedo Sofa
+                        </h3>
+                        <p className="mt-2 text-xs text-neutral-600 leading-relaxed">
+                          Clean architectural profile, emerald green Italian cotton velvet, tapered French beech legs, and high-resilience comfort.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="p-6 pt-0 flex items-center justify-between text-xs font-semibold text-neutral-950 border-t border-neutral-100 mt-4">
+                      <span>Customize Dimensions & Fabric</span>
+                      <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Showroom & Complimentary Swatches */}
+                  <div
+                    onClick={() => {
+                      setActiveView('atelier');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="bg-white border border-neutral-200/90 rounded-2xl overflow-hidden shadow-2xs hover:shadow-lg hover:border-neutral-300 transition-all cursor-pointer group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="relative aspect-16/10 bg-neutral-100 overflow-hidden">
+                        <img
+                          src="/src/assets/images/homespirit_showroom_paris_1792507848811.jpg"
+                          alt="Showroom Boulevard Saint-Germain"
+                          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute top-3 left-3 bg-neutral-950/80 backdrop-blur-md text-white text-[11px] font-medium px-2.5 py-0.5 rounded-md">
+                          Flagship Showroom
+                        </div>
+                        <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md rounded-xl px-3 py-2 flex items-center justify-between text-xs">
+                          <span className="font-semibold text-neutral-900">Paris & San Francisco</span>
+                          <span className="font-mono text-neutral-500">Free Fabric Kit</span>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="text-[10px] uppercase font-mono text-neutral-400 font-bold mb-1">
+                          Private Atelier Visits
+                        </div>
+                        <h3 className="font-bold text-neutral-950 text-base group-hover:text-neutral-700 transition-colors">
+                          Galleries & 500+ Swatch Kit
+                        </h3>
+                        <p className="mt-2 text-xs text-neutral-600 leading-relaxed">
+                          Visit our gallery on Boulevard Saint-Germain Paris, or order 3 complimentary fabric samples delivered straight to your home.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="p-6 pt-0 flex items-center justify-between text-xs font-semibold text-neutral-950 border-t border-neutral-100 mt-4">
+                      <span>Order Free Swatches</span>
+                      <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
             <AboutSection />
             <ContactSection />
           </>
@@ -385,6 +584,13 @@ export default function App() {
             onSelectProperty={(prop) => setSelectedPropertyForDetails(prop)}
             onRequestViewing={(prop) => setSelectedPropertyForDetails(prop)}
             initialFilters={activeFilters}
+          />
+        )}
+
+        {activeView === 'atelier' && (
+          <AtelierConfigurator
+            onInquirePiece={handleInquireAtelierPiece}
+            onOrderSwatches={handleOrderSwatches}
           />
         )}
 

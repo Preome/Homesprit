@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface FooterProps {
-  onNavigateSection: (view: 'home' | 'properties' | 'about' | 'contact' | 'admin') => void;
+  onNavigateSection: (view: 'home' | 'properties' | 'atelier' | 'about' | 'contact' | 'admin') => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
@@ -14,7 +14,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
               homesprit
             </div>
             <p className="mt-1 text-xs text-neutral-500 max-w-sm">
-              Architectural real estate brokerage, property management, and private residential acquisitions.
+              Architectural real estate brokerage, property management, and bespoke French living by Atelier Home Spirit France.
             </p>
           </div>
 
@@ -30,6 +30,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
               className="hover:text-neutral-950 transition-colors cursor-pointer"
             >
               Properties
+            </button>
+            <button
+              onClick={() => onNavigateSection('atelier')}
+              className="hover:text-neutral-950 transition-colors cursor-pointer"
+            >
+              Atelier Spirit
             </button>
             <button
               onClick={() => onNavigateSection('about')}

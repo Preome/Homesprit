@@ -3,8 +3,8 @@ import { Building2, User, LogOut, ChevronDown, LayoutDashboard, Sparkles } from 
 import { AuthUser } from './LoginModal';
 
 interface NavbarProps {
-  activeView: 'home' | 'properties' | 'about' | 'contact' | 'admin';
-  onChangeView: (view: 'home' | 'properties' | 'about' | 'contact' | 'admin') => void;
+  activeView: 'home' | 'properties' | 'atelier' | 'about' | 'contact' | 'admin';
+  onChangeView: (view: 'home' | 'properties' | 'atelier' | 'about' | 'contact' | 'admin') => void;
   currentUser: AuthUser | null;
   onOpenLogin: () => void;
   onLogout: () => void;
@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           {/* Zone 2: Navigation Links */}
-          <nav className="hidden md:flex items-center gap-9 text-sm font-medium text-neutral-600">
+          <nav className="hidden md:flex items-center gap-7 lg:gap-9 text-sm font-medium text-neutral-600">
             <button
               onClick={() => onChangeView('home')}
               className={`hover:text-neutral-950 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
@@ -55,6 +55,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               Properties
+            </button>
+            <button
+              onClick={() => onChangeView('atelier')}
+              className={`hover:text-neutral-950 transition-colors whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                activeView === 'atelier'
+                  ? 'text-neutral-950 font-bold border-b-2 border-neutral-950 pb-1 -mb-1'
+                  : ''
+              }`}
+            >
+              <span>Atelier Spirit</span>
+              <span className="text-[10px] font-mono px-1.5 py-0.2 bg-amber-50 text-amber-900 border border-amber-200/80 rounded font-semibold">
+                Sur-Mesure
+              </span>
             </button>
             <button
               onClick={() => onChangeView('about')}
@@ -140,6 +153,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                     >
                       <Building2 className="w-3.5 h-3.5 text-neutral-500" />
                       <span>Browse Properties</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        onChangeView('atelier');
+                        setIsUserMenuOpen(false);
+                      }}
+                      className="w-full text-left px-3 py-2 text-neutral-700 hover:bg-neutral-50 flex items-center gap-2 cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-neutral-500" />
+                      <span>Atelier Spirit (Bespoke)</span>
                     </button>
 
                     <div className="border-t border-neutral-100 my-1" />
